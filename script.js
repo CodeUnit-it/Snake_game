@@ -232,15 +232,22 @@ window.onload = function () {
 const botones = document.querySelectorAll(".btn-control");
 
 botones.forEach((boton) => {
+  // touchstart es vital para móviles
   boton.addEventListener("touchstart", manejarDireccion, { passive: false });
+  // click para pruebas en computadora
   boton.addEventListener("click", manejarDireccion);
 });
 function manejarDireccion(e) {
-  // Evita que la pantalla se mueva o haga zoom al tocar los botones
-  if (e.type === "touchstart") e.preventDefault();
+  // 1. Detenemos el comportamiento por defecto del móvil (scroll/zoom)
+  if (e.cancelable) e.preventDefault();
 
-  const dirPulsada = e.target.dataset.dir;
+  // 2. Buscamos el botón más cercano (por si tocaste el icono o el borde)
+  const boton = e.target.closest(".btn-control");
+  if (!boton) return;
 
+  const dirPulsada = boton.dataset.dir;
+
+  // 3. Cambiamos la dirección directamente (Lógica de colisión incluida)
   if (dirPulsada === "up" && direccion !== "ABAJO") direccion = "ARRIBA";
   else if (dirPulsada === "down" && direccion !== "ARRIBA") direccion = "ABAJO";
   else if (dirPulsada === "left" && direccion !== "DERECHA")

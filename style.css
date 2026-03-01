@@ -207,3 +207,12 @@ button:hover {
     width: 85vw;
   }
 }
+
+.btn-control {
+  /* Evita que aparezca el cuadro de selección azul al tocar mucho */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Importante para que el toque no se "deslice" */
+  touch-action: none;
+}
