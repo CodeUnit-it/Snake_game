@@ -1,0 +1,209 @@
+/* =========================================
+   1. REGLAS GLOBALES Y FIJADO DE PANTALLA
+   ========================================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  /* Bloquea el scroll por completo */
+  overflow: hidden;
+  /* Evita el "pull-to-refresh" en móviles */
+  overscroll-behavior: none;
+  position: fixed;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("fondo.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* =========================================
+   2. ELEMENTOS DEL JUEGO (CANVAS Y MENÚS)
+   ========================================= */
+canvas {
+  border: 2px solid #000;
+  background: url("board.png") rgba(255, 255, 255, 0.8);
+  background-size: cover;
+  width: 90vw;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  touch-action: none; /* Evita gestos sobre el juego */
+}
+
+.juego {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  border: 5px solid #098935;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.39);
+}
+
+#menu {
+  display: flex;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+
+/* =========================================
+   3. BOTONES Y CONTROLES
+   ========================================= */
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Controles táctiles (Ocultos en PC) */
+#controles {
+  display: none;
+  margin-top: 15px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.fila-central {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-control {
+  width: 65px;
+  height: 65px;
+  font-size: 24px;
+  border-radius: 50%;
+  background-color: #098935;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  touch-action: none; /* Crucial para que no mueva la pantalla */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-control:active {
+  transform: scale(0.9);
+  background-color: #065f24;
+}
+
+/* =========================================
+   4. POSICIONAMIENTO ESCRITORIO (DESKTOP)
+   ========================================= */
+#menuLateral {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#puntajes {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 200px;
+  color: #fff;
+  background-color: #4caf50;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* =========================================
+   5. PANTALLAS SUPERPUESTAS (OVERLAYS)
+   ========================================= */
+#pantallaInicio,
+#pantallaGameOver {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  color: white;
+}
+
+#pantallaGameOver {
+  display: none;
+}
+
+.menu-inicio,
+.gameover-box {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  width: 85%;
+  max-width: 400px;
+}
+
+.gameover-box {
+  background: white;
+  color: black;
+}
+
+.botones-dificultad {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* =========================================
+   6. 📱 AJUSTES MÓVIL (PANTALLA PEQUEÑA)
+   ========================================= */
+@media (max-width: 768px) {
+  body {
+    justify-content: flex-start;
+    padding-top: 15px;
+  }
+
+  #controles {
+    display: flex;
+  } /* Mostrar flechas */
+
+  #menuLateral {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+
+  #puntajes,
+  .btn-limpiar {
+    display: none;
+  } /* Ocultar para ganar espacio */
+
+  canvas {
+    width: 85vw;
+  }
+}

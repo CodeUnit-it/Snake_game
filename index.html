@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de la Vibora</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="menu">
+      <span>Puntos: <span id="score">0</span></span>
+      <span>Dificultad: <span id="dificultad">Medio</span></span>
+    </div>
+
+    <!-- Menu lateral con las opciones -->
+    <div id="menuLateral">
+      <button onclick="togglePausa()">Pausar</button>
+      <button onclick="reiniciar()">Reiniciar</button>
+      <button class="btn-limpiar" onclick="limpiarPuntajes()">
+        Limpiar Puntajes
+      </button>
+      <!-- Botón para limpiar los puntajes -->
+    </div>
+
+    <div id="pantallaInicio">
+      <div class="menu-inicio">
+        <h2>Seleccionar Dificultad</h2>
+
+        <div class="botones-dificultad">
+          <button onclick="setDificultad(150, 'Fácil')">Fácil</button>
+          <button onclick="setDificultad(100, 'Medio')">Medio</button>
+          <button onclick="setDificultad(50, 'Difícil')">Difícil</button>
+        </div>
+
+        <button class="btn-iniciar" onclick="comenzarJuego()">
+          Iniciar Juego
+        </button>
+      </div>
+    </div>
+    <div class="juego">
+      <canvas id="gameCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <div id="controles">
+      <button class="btn-control" data-dir="up">↑</button>
+      <div class="fila-central">
+        <button class="btn-control" data-dir="left">←</button>
+        <button class="btn-control" data-dir="down">↓</button>
+        <button class="btn-control" data-dir="right">→</button>
+      </div>
+    </div>
+
+    <div id="puntajes">
+      <h3>Puntajes jugadores</h3>
+      <ul id="listaPuntajes"></ul>
+    </div>
+
+    <div id="pantallaGameOver">
+      <div class="gameover-box">
+        <h2 id="mensajeFinal">Game Over</h2>
+        <p id="puntajeFinal"></p>
+
+        <button onclick="reiniciarDesdeGameOver()">Reiniciar</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
