@@ -48,13 +48,28 @@ function comenzarJuego() {
   clearInterval(intervaloJuego);
   iniciarJuego();
 }
-
 function cambiarDireccion(event) {
-  if (event.keyCode === 37 && direccion !== "DERECHA") direccion = "IZQUIERDA";
-  else if (event.keyCode === 38 && direccion !== "ABAJO") direccion = "ARRIBA";
-  else if (event.keyCode === 39 && direccion !== "IZQUIERDA")
+  const tecla = event.key;
+  if (
+    (tecla === "ArrowLeft" || event.keyCode === 37) &&
+    direccion !== "DERECHA"
+  )
+    direccion = "IZQUIERDA";
+  else if (
+    (tecla === "ArrowUp" || event.keyCode === 38) &&
+    direccion !== "ABAJO"
+  )
+    direccion = "ARRIBA";
+  else if (
+    (tecla === "ArrowRight" || event.keyCode === 39) &&
+    direccion !== "IZQUIERDA"
+  )
     direccion = "DERECHA";
-  else if (event.keyCode === 40 && direccion !== "ARRIBA") direccion = "ABAJO";
+  else if (
+    (tecla === "ArrowDown" || event.keyCode === 40) &&
+    direccion !== "ARRIBA"
+  )
+    direccion = "ABAJO";
 }
 
 function colision(cabeza, array) {
@@ -214,31 +229,25 @@ window.onload = function () {
   document.getElementById("imagenInicial").style.display = "block";
   actualizarPuntajes();
 };
-
 const botones = document.querySelectorAll(".btn-control");
 
 botones.forEach((boton) => {
-  boton.addEventListener("touchstart", manejarDireccion);
-  boton.addEventListener("click", manejarDireccion); // también funciona en desktop
+  boton.addEventListener("touchstart", manejarDireccion, { passive: false });
+  boton.addEventListener("click", manejarDireccion);
 });
-
 function manejarDireccion(e) {
-  const direccion = e.target.dataset.dir;
+  // Evita que la pantalla se mueva o haga zoom al tocar los botones
+  if (e.type === "touchstart") e.preventDefault();
 
-  const evento = new KeyboardEvent("keydown", {
-    key:
-      direccion === "up"
-        ? "ArrowUp"
-        : direccion === "down"
-          ? "ArrowDown"
-          : direccion === "left"
-            ? "ArrowLeft"
-            : "ArrowRight",
-  });
+  const dirPulsada = e.target.dataset.dir;
 
-  document.dispatchEvent(evento);
+  if (dirPulsada === "up" && direccion !== "ABAJO") direccion = "ARRIBA";
+  else if (dirPulsada === "down" && direccion !== "ARRIBA") direccion = "ABAJO";
+  else if (dirPulsada === "left" && direccion !== "DERECHA")
+    direccion = "IZQUIERDA";
+  else if (dirPulsada === "right" && direccion !== "IZQUIERDA")
+    direccion = "DERECHA";
 }
-
 function mostrarGameOver(mensaje) {
   clearInterval(intervaloJuego);
 
